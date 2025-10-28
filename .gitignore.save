@@ -1,0 +1,28 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+.env/
+.venv/
+
+# IDE settings
+.vscode/
+.idea/
+
+# Image & PDF outputs
+*.png
+*.jpg
+*.jpeg
+*.pdf
+*.tiff
+
+# Text output files
+*.txt
+
+# System files
+.DS_Store
+Thumbs.db

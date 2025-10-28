@@ -1,112 +1,76 @@
 import pytesseract
-from PIL import Image
+import cv2
+import numpy as np
 import os
 import re
-import cv2 
-import numpy as np
 
-# --- CONFIGURATION (Customize these settings) ---
+# 1. SET THE TESSERACT PATH - YOUR CONFIRMED PATH
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe' 
 
-# 1. SET THE FOLDER PATH
-# IMPORTANT: This path must be correct!
-folder_path = r"C:\Users\kala_\OneDrive\Desktop\ocr_test" 
+# 2. CONFIGURATION
+# Set the folder where your script and images are located
+FOLDER_PATH = r'C:\Users\kala_\OneDrive\Desktop\ocr_test'
+LANGUAGES = 'tam+eng'  # Use both Tamil (tam) and English (eng) models
+OCR_CONFIG = r'--psm 6'  # PSM 6: Assumes a single uniform block of text (good for forms)
 
-# 2. SET THE LANGUAGE CODE (Use 'eng' for English, or 'eng+tam' for English and Tamil)
-ocr_language = 'eng' 
-
-# 3. DEFINE IMAGE EXTENSIONS TO PROCESS
-IMAGE_EXTENSIONS = ('.png', '.jpg', '.jpeg', '.tiff') 
-
-# 4. SET THE REGULAR EXPRESSION (RegEx) PATTERN
-# **UPDATE THIS PATTERN** after reviewing the raw text output!
-# Example below looks for "Invoice No" or "INV" followed by mixed alphanumeric characters/slashes
-invoice_pattern = r"(Invoice No|INV|Ref)[:\s]*([\w/]+)"
-
-# -------------------------------------------------
-
+# 3. PREPROCESSING FUNCTION 🛠️
 def preprocess_image(image_path):
-    """Cleans the image using OpenCV for better OCR results."""
-    # Read the image using OpenCV
+    """Loads image, converts to grayscale, and applies adaptive thresholding."""
     img = cv2.imread(image_path)
+    if img is None:
+        print(f"Error: Could not read image at {image_path}")
+        return None
     
-    # Convert to Grayscale
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    # Adaptive Thresholding creates a clean black-and-white image, essential for OCR
+    thresh = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
+    return thresh
+
+# 4. DATA EXTRACTION FUNCTION
+def extract_invoice_data(text):
+    """Tries to find an 8-digit sequence (common invoice number format)."""
+    # Look for a sequence of 8 to 12 digits, surrounded by word boundaries (\b)
+    invoice_number_match = re.search(r'\b\d{4}-\d{5}\b', text)
     
-    # Apply Gaussian Blur (optional, helps with noise reduction)
-    blur = cv2.GaussianBlur(gray, (5, 5), 0)
+    data = {
+        "Invoice Number": invoice_number_match.group(0) if invoice_number_match else "Not Found"
+    }
+    return data
+
+# 5. MAIN PROCESSING LOGIC
+def run_ocr_batch(folder_path):
+    print("--- Starting Enhanced OCR Process ---")
     
-    # Apply Adaptive Thresholding (converts to pure black/white)
-    thresh = cv2.adaptiveThreshold(
-        blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2
-    )
-    
-    # Convert the OpenCV object back to a PIL Image object for Tesseract
-    return Image.fromarray(thresh)
+    # Iterate through all files in your designated folder
+    for filename in os.listdir(folder_path):
+        if filename.endswith(('.png', '.jpg', '.jpeg', '.tiff')):
+            image_path = os.path.join(folder_path, filename)
+            print(f"\nProcessing {filename}...")
+            
+            # Preprocess the image
+            processed_img = preprocess_image(image_path)
+            if processed_img is None:
+                continue
 
+            try:
+                # Perform OCR using the preprocessed image, multi-language, and PSM config
+                raw_text = pytesseract.image_to_string(processed_img, lang=LANGUAGES, config=OCR_CONFIG)
+                print(" -> OCR Complete.")
 
-# --- START MAIN EXECUTION ---
-print("--- Starting Advanced Batch OCR Process ---")
-print(f"Targeting folder: {folder_path}")
-print(f"Using Tesseract Language: {ocr_language}")
+                # Extract Structured Data
+                extracted_data = extract_invoice_data(raw_text)
 
-# Loop through all files in the specified folder
-for filename in os.listdir(folder_path):
-    # Check if the file is an image
-    if filename.lower().endswith(IMAGE_EXTENSIONS):
-        
-        input_path = os.path.join(folder_path, filename)
-        
-        # Naming the Output File
-        base_name = os.path.splitext(filename)[0]
-        output_pdf_filename = base_name + "_searchable.pdf" 
-        output_pdf_path = os.path.join(folder_path, output_pdf_filename)
-        
-        print(f"\nProcessing {filename}...")
-        
-        try:
-            # 1. Image Pre-processing
-            img = preprocess_image(input_path) 
-            
-            # --- PHASE 1: OCR AND PDF CREATION ---
-            
-            # Create the searchable PDF bytes
-            pdf_bytes = pytesseract.image_to_pdf_or_hocr(
-                img, 
-                lang=ocr_language, 
-                extension='pdf' 
-            )
-            
-            # Save the PDF file
-            with open(output_pdf_path, 'wb') as f:
-                f.write(pdf_bytes)
-            
-            print(f"  -> SUCCESS! Searchable PDF saved to {output_pdf_filename}")
-
-            # --- PHASE 2: DATA EXTRACTION ---
-            
-            # Get the raw text string for parsing
-            raw_text = pytesseract.image_to_string(img, lang=ocr_language)
-            
-            # **DEBUGGING LINE: SEE THE RAW TEXT TO FIX YOUR REGEX**
-            print("\n--- RAW EXTRACTED TEXT (for debugging) ---")
-            print(raw_text)
-            print("------------------------------------------\n")
-
-            # Perform Data Extraction
-            match = re.search(invoice_pattern, raw_text, re.IGNORECASE)
-            
-            if match:
-                # Group 2 is the actual captured number from the RegEx pattern
-                invoice_number = match.group(2).strip()
-                print(f"  -> FOUND Invoice Number: {invoice_number}")
+                # Print Results
+                print("--- RAW EXTRACTED TEXT (for debugging) ---")
+                print(raw_text)
+                print("------------------------------------------")
+                print(f" -> Data Extraction: Invoice Number: {extracted_data['Invoice Number']}")
                 
-                # Further logic: save 'invoice_number' to a database or CSV here.
-            else:
-                print("  -> Data Extraction: Invoice Number not found (RegEx did not match).")
+            except Exception as e:
+                print(f" -> An unexpected error occurred during OCR for {filename}: {e}")
 
-        except pytesseract.TesseractNotFoundError:
-            print("  -> FATAL ERROR: Tesseract is not found. Check Tesseract installation and PATH.")
-        except Exception as e:
-            print(f"  -> ERROR processing {filename}: {e}")
-            
-print("\n--- Batch OCR Complete ---")
+    print("\n--- OCR Run Complete ---")
+
+
+if __name__ == '__main__':
+    run_ocr_batch(FOLDER_PATH)
