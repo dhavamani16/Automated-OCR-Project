@@ -1,40 +1,78 @@
-project-signboard-translator
+<h1 style="font-family: 'Arial Black', sans-serif; color:#1F618D;">🪧 Project: Signboard Translator</h1>
 
-This tool extracts text from signboard images and translates it into multiple languages including Tamil. It also provides audio output, making signboards more accessible for everyone.
+<p style="font-family: 'Verdana', sans-serif; font-size:16px;">
+Signboard Translator is an AI-powered system that extracts text from signboard images and translates it into multiple languages, including Tamil. It also provides <b>audio output</b>, making signboards more accessible for everyone.
+</p>
 
 <img width="1000" height="900" alt="Screenshot 2025-11-17 210033" src="https://github.com/user-attachments/assets/b6114030-cfd0-4efc-8d7b-eb54381b02fa" />
 
+<p style="font-family: 'Verdana', sans-serif; font-size:16px;">
+Imagine a user traveling in an unfamiliar area. They can capture or upload a <b>signboard image</b> using this tool. The system will:
+</p>
 
-Let's say a user is traveling and sees a signboard in an unfamiliar language. They can capture or upload an image of the signboard using this tool. The system extracts the text, translates it into the chosen language, and plays an audio version of the translation for easier understanding.
+<ul style="font-family: 'Verdana', sans-serif; font-size:16px;">
+<li>Extract the text using <b>Tesseract OCR</b></li>
+<li>Translate it using <b>Gemini Generative AI</b></li>
+<li>Play an audio version using <b>gTTS</b></li>
+</ul>
 
-Technical Architecture
-<img src="resources/architecture.jpg"/>
+<h2 style="font-family: 'Arial Black', sans-serif; color:#1F618D;">🏗️ Technical Architecture</h2>
 
-Stage 1: Capture or upload a signboard image. Extract text from it using Tesseract OCR and detect the source language.
+<img src="resources/architecture.jpg" alt="Technical Architecture" style="width:60%;"/>
 
-Stage 2: Translate the extracted text using Gemini Generative AI. Generate audio output using gTTS. The Flutter app displays the translated text and plays the audio.
+<ol style="font-family: 'Verdana', sans-serif; font-size:16px;">
+<li><b>Stage 1: OCR & Text Extraction</b>
+<ul>
+<li>Capture or upload a signboard image.</li>
+<li>Extract text using <b>Tesseract OCR</b>.</li>
+<li>Detect the source language automatically.</li>
+</ul>
+</li>
+<li><b>Stage 2: Translation & Audio Output</b>
+<ul>
+<li>Translate text using <b>Gemini Generative AI</b>.</li>
+<li>Generate audio using <b>gTTS</b>.</li>
+<li>Send the translated text and audio back to the Flutter app for display/playback.</li>
+</ul>
+</li>
+</ol>
 
-Set-up
+<h2 style="font-family: 'Arial Black', sans-serif; color:#1F618D;">⚙️ Setup Instructions</h2>
 
-First, get an API key from Gemini API
-. Update .env with your key:
+<ul style="font-family: 'Verdana', sans-serif; font-size:16px;">
+<li><b>Get API Key:</b> Obtain from <a href="https://console.groq.com/keys">Gemini Console</a> and update <code>.env</code>:
+<pre>GEMINI_API_KEY=your_api_key_here</pre></li>
 
-GEMINI_API_KEY=your_api_key_here
+<li><b>Install Dependencies:</b>
+<pre>pip install -r requirements.txt</pre>
+</li>
+
+<li><b>Run Flask Backend:</b>
+<pre>python app.py</pre>
+</li>
+
+<li><b>Run Flutter App:</b> Connect to the backend and start translating signboard images.</li>
+</ul>
+
+<h2 style="font-family: 'Arial Black', sans-serif; color:#1F618D;">🚀 Features</h2>
+<ul style="font-family: 'Verdana', sans-serif; font-size:16px;">
+<li>🖼️ Image-based text extraction (Tesseract OCR)</li>
+<li>🌐 Multi-language translation (Gemini AI)</li>
+<li>🔊 Audio output using gTTS</li>
+<li>📱 Flutter app integration</li>
+<li>⚡ Real-time translation and playback</li>
+</ul>
+
+<h2 style="font-family: 'Arial Black', sans-serif; color:#1F618D;">📄 License & Terms</h2>
+<p style="font-family: 'Verdana', sans-serif; font-size:16px;">
+Copyright (C) Codebasics Inc. All rights reserved.<br>
+Licensed under the <b>MIT License</b>.<br>
+Commercial use is strictly prohibited without prior written permission.<br>
+Attribution must be given in all copies or substantial portions of the software.
+</p>
 
 
-Install dependencies:
-
-pip install -r requirements.txt
 
 
-Run the Flask backend:
-
-python app.py
 
 
-Open the Flutter app and connect it to the backend.
-
-Copyright (C) Codebasics Inc. All rights reserved.
-
-Additional Terms:
-This software is licensed under the MIT License. However, commercial use of this software is strictly prohibited without prior written permission from the author. Attribution must be given in all copies or substantial portions of the software.
