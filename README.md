@@ -1,10 +1,10 @@
 <h1 style="font-family: 'Arial Black', sans-serif; color:#1F618D;">🪧 Project: Signboard Translator</h1>
 
 <p style="font-family: 'Verdana', sans-serif; font-size:16px;">
-Signboard Translator is an AI-powered system that extracts text from signboard images and translates it into multiple languages, including Tamil. It also provides <b>audio output</b>, making signboards more accessible for everyone.
+Signboard Translator is an AI-powered system that extracts text from signboard images and translates it into multiple languages, including Tamil. It also provides audio output, making signboards more accessible for everyone. The system uses Tesseract OCR for text extraction and Gemini Generative AI for translation.
 </p>
 
-<img width="1000" height="900" alt="Screenshot 2025-11-17 210033" src="https://github.com/user-attachments/assets/b6114030-cfd0-4efc-8d7b-eb54381b02fa" />
+<img width="9000" height="500" alt="Screenshot 2025-11-17 210033" src="https://github.com/user-attachments/assets/b6114030-cfd0-4efc-8d7b-eb54381b02fa" />
 
 <p style="font-family: 'Verdana', sans-serif; font-size:16px;">
 Imagine a user traveling in an unfamiliar area. They can capture or upload a <b>signboard image</b> using this tool. The system will:
@@ -17,8 +17,6 @@ Imagine a user traveling in an unfamiliar area. They can capture or upload a <b>
 </ul>
 
 <h2 style="font-family: 'Arial Black', sans-serif; color:#1F618D;">🏗️ Technical Architecture</h2>
-
-<img src="resources/architecture.jpg" alt="Technical Architecture" style="width:60%;"/>
 
 <ol style="font-family: 'Verdana', sans-serif; font-size:16px;">
 <li><b>Stage 1: OCR & Text Extraction</b>
