@@ -1,47 +1,29 @@
-Signboard Translator
+project-signboard-translator
 
-Signboard Translator is an AI-powered system that extracts text from signboard images and translates it into multiple languages, including Tamil. It also provides audio output, making signboards more accessible for everyone. The system uses Tesseract OCR for text extraction and Gemini Generative AI for translation.
+This tool extracts text from signboard images and translates it into multiple languages including Tamil. It also provides audio output, making signboards more accessible for everyone.
 
-Features
+<img src="resources/tool.jpg"/>
 
-Text Extraction: Uses Tesseract OCR to read text from signboard images.
-
-Multi-language Translation: Translate extracted text into multiple languages.
-
-Audio Output: Text-to-Speech (TTS) functionality using gTTS for audio playback.
-
-Real-time Processing: Integrated Flutter mobile app communicates with a Flask backend for seamless operation.
+Let's say a user is traveling and sees a signboard in an unfamiliar language. They can capture or upload an image of the signboard using this tool. The system extracts the text, translates it into the chosen language, and plays an audio version of the translation for easier understanding.
 
 Technical Architecture
+<img src="resources/architecture.jpg"/>
 
-Stage 1: OCR and Text Extraction
+Stage 1: Capture or upload a signboard image. Extract text from it using Tesseract OCR and detect the source language.
 
-Capture or upload a signboard image.
+Stage 2: Translate the extracted text using Gemini Generative AI. Generate audio output using gTTS. The Flutter app displays the translated text and plays the audio.
 
-Extract text using Tesseract OCR.
+Set-up
 
-Detect the language of the extracted text.
+First, get an API key from Gemini API
+. Update .env with your key:
 
-Stage 2: Translation and Audio Generation
+GEMINI_API_KEY=your_api_key_here
 
-Translate the extracted text using Gemini Generative AI.
-
-Generate audio output using gTTS for the translated text.
-
-Return translated text and audio to the Flutter mobile app for display/playback.
-
-Setup Instructions
-
-Clone the repository.
 
 Install dependencies:
 
 pip install -r requirements.txt
-
-
-Obtain the Gemini API key and update .env:
-
-GEMINI_API_KEY=your_api_key_here
 
 
 Run the Flask backend:
@@ -49,24 +31,9 @@ Run the Flask backend:
 python app.py
 
 
-Open the Flutter mobile app and connect it to the backend.
-
-Usage
-
-Open the Flutter app on your mobile device.
-
-Capture or upload a signboard image.
-
-The app will display the extracted text and translated version.
-
-Tap the audio button to listen to the translation.
-
-License & Terms
+Open the Flutter app and connect it to the backend.
 
 Copyright (C) Codebasics Inc. All rights reserved.
 
-Licensed under the MIT License.
-
-Commercial use is prohibited without prior written permission.
-
-Attribution must be given in all copies or substantial portions of the software.
+Additional Terms:
+This software is licensed under the MIT License. However, commercial use of this software is strictly prohibited without prior written permission from the author. Attribution must be given in all copies or substantial portions of the software.
