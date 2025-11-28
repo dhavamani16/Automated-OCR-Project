@@ -1,4 +1,4 @@
-<h1 style="font-family: 'Arial Black', sans-serif; color:#1F618D;">🪧 Project: Signboard Translator</h1>
+<h1 style="font-family: 'Arial Black', sans-serif; color:#1F618D;"> Project: Signboard Translator</h1>
 
 <p style="font-family: 'Verdana', sans-serif; font-size:16px;">
 Signboard Translator is an AI-powered system that extracts text from signboard images and translates it into multiple languages, including Tamil. It also provides audio output, making signboards more accessible for everyone. The system uses Tesseract OCR for text extraction and Gemini Generative AI for translation.
@@ -35,7 +35,7 @@ Imagine a user traveling in an unfamiliar area. They can capture or upload a <b>
 </li>
 </ol>
 
-<h2 style="font-family: 'Arial Black', sans-serif; color:#1F618D;">⚙️ Setup Instructions</h2>
+<h2 style="font-family: 'Arial Black', sans-serif; color:#1F618D;"> Setup Instructions</h2>
 
 <ul style="font-family: 'Verdana', sans-serif; font-size:16px;">
 <li><b>Get API Key:</b> Obtain from <a href="https://console.groq.com/keys">Gemini Console</a> and update <code>.env</code>:
@@ -52,16 +52,16 @@ Imagine a user traveling in an unfamiliar area. They can capture or upload a <b>
 <li><b>Run Flutter App:</b> Connect to the backend and start translating signboard images.</li>
 </ul>
 
-<h2 style="font-family: 'Arial Black', sans-serif; color:#1F618D;">🚀 Features</h2>
+<h2 style="font-family: 'Arial Black', sans-serif; color:#1F618D;"> Features</h2>
 <ul style="font-family: 'Verdana', sans-serif; font-size:16px;">
-<li>🖼️ Image-based text extraction (Tesseract OCR)</li>
-<li>🌐 Multi-language translation (Gemini AI)</li>
-<li>🔊 Audio output using gTTS</li>
-<li>📱 Flutter app integration</li>
-<li>⚡ Real-time translation and playback</li>
+<li> Image-based text extraction (Tesseract OCR)</li>
+<li>Multi-language translation (Gemini AI)</li>
+<li> Audio output using gTTS</li>
+<li> Flutter app integration</li>
+<li> Real-time translation and playback</li>
 </ul>
 
-<h2 style="font-family: 'Arial Black', sans-serif; color:#1F618D;">📄 License & Terms</h2>
+<h2 style="font-family: 'Arial Black', sans-serif; color:#1F618D;"> License & Terms</h2>
 <p style="font-family: 'Verdana', sans-serif; font-size:16px;">
 Copyright (C) Codebasics Inc. All rights reserved.<br>
 Licensed under the <b>MIT License</b>.<br>
