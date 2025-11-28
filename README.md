@@ -16,7 +16,7 @@ Imagine a user traveling in an unfamiliar area. They can capture or upload a <b>
 <li>Play an audio version using <b>gTTS</b></li>
 </ul>
 
-<h2 style="font-family: 'Arial Black', sans-serif; color:#1F618D;">🏗️ Technical Architecture</h2>
+<h2 style="font-family: 'Arial Black', sans-serif; color:#1F618D;"> Technical Architecture</h2>
 
 <ol style="font-family: 'Verdana', sans-serif; font-size:16px;">
 <li><b>Stage 1: OCR & Text Extraction</b>
