@@ -2,7 +2,7 @@ project-signboard-translator
 
 This tool extracts text from signboard images and translates it into multiple languages including Tamil. It also provides audio output, making signboards more accessible for everyone.
 
-<img width="1920" height="1008" alt="Screenshot 2025-11-17 210033" src="https://github.com/user-attachments/assets/b6114030-cfd0-4efc-8d7b-eb54381b02fa" />
+<img width="100" height="500" alt="Screenshot 2025-11-17 210033" src="https://github.com/user-attachments/assets/b6114030-cfd0-4efc-8d7b-eb54381b02fa" />
 
 
 Let's say a user is traveling and sees a signboard in an unfamiliar language. They can capture or upload an image of the signboard using this tool. The system extracts the text, translates it into the chosen language, and plays an audio version of the translation for easier understanding.
