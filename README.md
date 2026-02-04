@@ -68,7 +68,8 @@ Licensed under the <b>MIT License</b>.<br>
 Commercial use is strictly prohibited without prior written permission.<br>
 Attribution must be given in all copies or substantial portions of the software.
 </p>
-
+---
+⭐ If you like this project, don’t forget to give it a star on GitHub!
 
 
 
