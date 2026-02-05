@@ -1,5 +1,4 @@
-# --- Project Component III: Back-End API Development (Flask Server) ---
-# This file integrates the OCR logic (placeholder), Translation, and TTS.
+
 
 import os
 from flask import Flask, request, jsonify, send_file
