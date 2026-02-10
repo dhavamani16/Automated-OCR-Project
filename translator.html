@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Contextual Sign Reader (Vision + Translation APIs)</title>
-    <!-- Load Tailwind CSS for modern styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #1a202c; }
@@ -32,8 +31,7 @@
                 <img id="previewImg" class="w-full object-contain" alt="Image Preview" />
             </div>
         </div>
-        
-        <!-- Context Selection -->
+
         <div class="mb-6">
             <label for="contextMode" class="block text-sm font-medium text-gray-300 mb-2">Context Mode (NLP Filter):</label>
             <select id="contextMode" class="w-full p-3 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-blue-500 focus:border-blue-500">
@@ -50,7 +48,6 @@
             <div id="loadingSpinner" class="hidden w-5 h-5 border-2 border-solid border-white rounded-full animate-spin border-t-transparent ml-2"></div>
         </button>
 
-        <!-- Result Section -->
         <div id="resultContainer" class="mt-8 pt-6 border-t border-gray-700 hidden">
             <h2 class="text-xl font-extrabold mb-4 text-white">API Analysis & Context</h2>
 
@@ -74,22 +71,13 @@
     </div>
 
     <script>
-        // API Endpoints for non-Gemini services
-        // NOTE: These are mock endpoints used to demonstrate the pivot, as the Canvas environment only supports Gemini.
-        // In a real application, these would point to the correct Google Cloud Vision/Translation endpoints.
+        
         const VISION_API_URL = "https://mock.google.cloud.vision.api/v1/ocr"; 
         const TRANSLATION_API_URL = "https://mock.google.cloud.translate.api/v3/translate";
-        
-        // However, to ensure functionality *in this environment*, we must use a working API.
-        // I am updating this to use the *only* functional API for image/text processing here (Gemini),
-        // but using a **system instruction** to force the behavior to be Vision+Translate.
-        // This is a necessary compromise for functionality, while meeting the conceptual pivot.
         const FALLBACK_API_MODEL = "gemini-2.5-flash-preview-09-2025";
-        const apiKey = ""; // Re-introduced apiKey variable
+        const apiKey = ""; 
         const FALLBACK_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${FALLBACK_API_MODEL}:generateContent?key=${apiKey}`; // URL now includes ?key=${apiKey}
 
-
-        // Utility functions for UI control
         function toggleLoading(isLoading) {
             const button = document.getElementById('translateButton');
             const buttonText = document.getElementById('buttonText');
@@ -113,11 +101,10 @@
             messageElement.classList.toggle('hidden', !message);
         }
 
-        // --- File Handling and Base64 Conversion ---
 
         let base64Image = null;
         let mimeType = null;
-        const MAX_SIZE = 3 * 1024 * 1024; // 3 MB limit
+        const MAX_SIZE = 3 * 1024 * 1024; 
 
         document.getElementById('imageUpload').addEventListener('change', function(event) {
             const file = event.target.files[0];
@@ -144,22 +131,20 @@
             button.disabled = false;
             mimeType = file.type;
 
-            // Display preview
             const reader = new FileReader();
             reader.onload = function(e) {
                 previewImg.src = e.target.result;
                 previewContainer.classList.remove('hidden');
                 
-                // Extract Base64 data part
+            
                 base64Image = e.target.result.split(',')[1];
             };
             reader.readAsDataURL(file);
         });
 
-        // --- Core API Call Function ---
 
         async function callMultiApi(prompt, b64Image, mime) {
-            // Define the JSON schema for structured output
+        
             const responseSchema = {
                 type: "OBJECT",
                 properties: {
@@ -169,8 +154,6 @@
                 },
                 required: ["original_text_found", "translated_meaning", "cultural_note"]
             };
-            
-            // System instruction to emulate the Vision + Translation API pipeline conceptually
             const systemInstruction = `You are emulating a two-step API process:
 1. Google Cloud Vision API performs OCR to extract text (this is your 'original_text_found').
 2. Google Cloud Translation API translates and contextually adapts the text (this is your 'translated_meaning' and 'cultural_note').
@@ -234,9 +217,6 @@ Strictly adhere to the user's prompt and output the requested JSON structure.`;
             }
         }
 
-
-        // --- Main Execution Function ---
-
         async function processImage() {
             if (!base64Image) {
                 displayMessage("Please upload an image first.", true);
@@ -263,7 +243,7 @@ Strictly adhere to the user's prompt and output the requested JSON structure.`;
                 document.getElementById('culturalNote').textContent = analysisResult.cultural_note;
                 document.getElementById('originalText').textContent = analysisResult.original_text_found;
 
-                // Update context display
+            
                 document.querySelector('#resultContainer .text-blue-300').textContent = `1. Translated Meaning (${contextModeText} Mode)`;
 
                 document.getElementById('resultContainer').classList.remove('hidden');
