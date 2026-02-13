@@ -6,10 +6,8 @@ print("="*60)
 print("TESSERACT TEST")
 print("="*60)
 
-# Set Tesseract path
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
-# Test 1: Check version
 print("\nTest 1: Checking Tesseract...")
 try:
     version = pytesseract.get_tesseract_version()
@@ -18,16 +16,14 @@ except Exception as e:
     print(f"ERROR: {e}")
     exit()
 
-# Test 2: Create and read test image
 print("\nTest 2: Testing OCR...")
 try:
-    # Create test image
+  
     img = np.ones((100, 400, 3), dtype=np.uint8) * 255
     cv2.putText(img, 'HELLO WORLD', (50, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 0, 0), 3)
     cv2.imwrite('test_image.png', img)
     print("Test image created")
-    
-    # Extract text
+ 
     text = pytesseract.image_to_string(img)
     print(f"Extracted: {text.strip()}")
     
